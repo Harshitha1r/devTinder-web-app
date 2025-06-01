@@ -1,13 +1,14 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { adduser } from "../state/slice";
 
 const Profile=()=>{
-    const userData = useSelector((store) => store.user.data);
-    const [formValue,setFormvalues]=useState({firstName:userData?.firstName,lastName:userData?.lastName
-        ,age:userData?.age,photoUrl:userData?.photoUrl,skills:userData?.skills,about:userData?.about})
+    const userData = useSelector((store) => store.user);
+    const [formValue,setFormvalues]=useState({firstName:"",lastName:""
+        ,age:"",photoUrl:"",about:""})
     const [message,setMessage]=useState("")
+        console.log(userData,formValue)
     const dispatch=useDispatch();
     const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,6 +17,10 @@ const Profile=()=>{
       [name]: value,
     });
   };
+  useEffect(()=>{
+    setFormvalues({firstName:userData?.data?.firstName,lastName:userData?.data?.lastName
+        ,age:userData?.data?.age,photoUrl:userData?.data?.photoUrl,about:userData?.data?.about})
+  },[userData])
   setTimeout(()=>{
     if(message){
         setMessage("")
@@ -24,7 +29,7 @@ const Profile=()=>{
   const updateInfo=async()=>{
     try{
         const res=await axios.patch("http://localhost:7000/profile/edit",{firstName:formValue.firstName,lastName:formValue.lastName,
-            age:formValue.age,photoUrl:formValue.photoUrl
+            age:formValue.age,photoUrl:formValue.photoUrl,about:formValue.about
         },{withCredentials:true})     
         dispatch(adduser(res?.data))
         setMessage("Profile Updated Successfully")   
@@ -34,20 +39,20 @@ const Profile=()=>{
     }
   }
     return(
-        <div className="h-123 bg-white-900 flex justify-center items-center">
-            <div className="h-110 w-120 bg-gray-500 rounded-xl flex flex-wrap items-center flex-col">
+        <div className="h-123 bg-neutral-400 flex justify-center items-center">
+            <div className="h-120 w-120 bg-gray-500 rounded-xl flex flex-wrap flex-col justify-between">
                 <span className="text-white text-xl m-2 font-bold">Profile Information</span>
-                <label className="text-white text-md m-1 pr-63">FirstName</label>
-                <input type="text" className="bg-gray-900 border-white text-white h-10 w-80 rounded-md shadow-xl" name="firstName" value={formValue.firstName} onChange={handleChange} />
-                <label className="text-white text-md m-1 pr-65">Lastname</label>
-                <input type="text" className="bg-gray-900 text-white h-10 w-80 rounded-md shadow-xl" name="lastName" value={formValue.lastName} onChange={handleChange} />
-                <label className="text-white text-md m-1 pr-73">Age</label>
-                <input type="text" className="bg-gray-900 text-white h-10 w-80 rounded-md shadow-xl" name="age" value={formValue.age} onChange={handleChange} />
-                <label className="text-white text-md m-1 pr-65">photoUrl</label>
-                <input type="text" className="bg-gray-900 text-white h-10 w-80 rounded-md shadow-xl" name="photoUrl" value={formValue.photoUrl} onChange={handleChange} />
-                <label className="text-white text-md m-1 pr-70">About</label>
-                <textarea type="text" className="bg-gray-900 text-white h-10 w-80 rounded-md shadow-xl" name="about" value={formValue.about} onChange={handleChange} />
-                <button className="block mx-auto text-xl font-bold bg-white w-20 h-5 m-5 rounded-xl cursor-pointer"
+                <label className="text-white text-md m-3 items-center flex">FirstName
+                <input type="text" className="bg-gray-400 border-white ml-6 text-white p-5 h-10 w-80 rounded-md shadow-xl" name="firstName" value={formValue.firstName} onChange={handleChange} /></label>
+                <label className="text-white text-md m-3 items-center flex">Lastname
+                <input type="text" className="bg-gray-400 text-white ml-7 h-10 p-5 w-80 rounded-md shadow-xl" name="lastName" value={formValue.lastName} onChange={handleChange} /></label>
+                <label className="text-white text-md m-3 items-center flex">Age
+                <input type="text" className="bg-gray-400 text-white ml-17 h-10 p-5 w-80 rounded-md shadow-xl" name="age" value={formValue.age} onChange={handleChange} /></label>
+                <label className="text-white text-md m-3 items-center flex">photoUrl
+                <input type="text" className="bg-gray-400 text-white ml-8 h-10 p-5 w-80 rounded-md shadow-xl" name="photoUrl" value={formValue.photoUrl} onChange={handleChange} /></label>
+                <label className="text-white text-md m-3 items-center flex">About
+                <textarea type="text" className="bg-gray-400 text-white ml-13 p-2 h-20 w-80 rounded-md shadow-xl" name="about" value={formValue.about} onChange={handleChange} /></label>
+                <button className="block mx-auto text-sm font-bold bg-black text-white w-40 h-8 m-5 rounded-sm cursor-pointer"
                 onClick={updateInfo}>Save Changes</button>
             </div>
             <div style={{

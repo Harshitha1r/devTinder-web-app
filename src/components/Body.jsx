@@ -9,25 +9,24 @@ import { adduser } from "../state/slice";
 const Body = () => {
     const userData = useSelector((store) => store.user);
     const dispatch=useDispatch();
+    const location=useLocation();
     const navigate=useNavigate()
-    const location = useLocation();
     const fetchUser = async () => {
+    if ((!userData && (location.pathname=="/login" || location.pathname=="/Signup")) || userData) return;
     try {
       const res = await axios.get("http://localhost:7000/profile/view", {
         withCredentials: true,
       });
       dispatch(adduser(res.data));
     } catch (err) {
+      console.log(err)
       if (err.status === 400) {
         navigate("/login");
       }
     }
   };
-
   useEffect(() => {
-    if(location.pathname !== "/login"){
     fetchUser();
-    }
   }, []);
     return (
         <>

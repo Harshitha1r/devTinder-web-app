@@ -9,6 +9,9 @@ const NavBar = () => {
     const [open, setOpen] = useState(false)
     const dispatch = useDispatch()
     const navigate=useNavigate();
+    const navigateProfile=()=>{
+        return navigate("/Profile");
+    }
     const logoutHandler = async () => {
         try {
             await axios.post("http://localhost:7000/logout",{}, { withCredentials: true })
@@ -33,7 +36,7 @@ const NavBar = () => {
                 {open && (
                     <div className="absolute right-0 mt-40 w-48 bg-white border rounded shadow-md z-50">
                         <ul className="py-1 text-sm text-gray-700" onClick={()=>setOpen(!open)}>
-                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={()=>navigate('/profile')}>Profile</li>
+                            <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={navigateProfile}>Profile</li>
                             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={logoutHandler}>Logout</li>
                         </ul>
                     </div>

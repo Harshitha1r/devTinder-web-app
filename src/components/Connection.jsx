@@ -17,8 +17,8 @@ const Connections=()=>{
         fetchConnections()
     },[])
     return(
-        <div className="h-123 bg-[url('https://img.freepik.com/free-vector/modern-polygon-technology-background_1035-17925.jpg?semt=ais_items_boosted&w=740')] bg-cover bg-center flex flex-col items-center justify-center">
-            <p className="font-bold">Connections</p>
+        <div className="h-123 bg-[url('https://img.freepik.com/free-vector/modern-polygon-technology-background_1035-17925.jpg?semt=ais_items_boosted&w=740')] bg-cover bg-center flex flex-col items-center">
+            <p className="font-bold text-xl">Connections</p>
             {connections?.length ? 
             (connections.map(user=>(
                 <div className="h-20 w-100 m-3 bg-gray-100 border-blue border-1 rounded-xl flex">

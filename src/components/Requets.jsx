@@ -31,8 +31,8 @@ const Requests=()=>{
         fetchConnections()
     },[])
     return(
-        <div className="h-123 bg-white flex flex-col items-center justify-center">
-            <p className="font-bold">Pending Requests</p>
+        <div className="h-123 bg-white flex flex-col items-center">
+            <p className="font-bold text-xl">Pending Requests</p>
             {requests.length ? 
             (requests.map(user=>(
                 <div className="h-20 w-150 m-3 bg-gray-100 flex justify-between border-gray-200 shadow-lg border-1 rounded-xl" key={user._id}>
@@ -42,8 +42,8 @@ const Requests=()=>{
                     <p className="text-sm">{user.about}</p>
                     </div>
                     <div className="flex justify-end mt-5 mr-2">
-                    <button className="bg-green-500 rounded-xl h-10 w-20" onClick={()=>requestHandler("accepted",user._id)}>Accept</button>
-                    <button className="bg-red-500 rounded-xl h-10 w-20" onClick={()=>requestHandler("rejected",user._id)}>Reject</button>
+                    <button className="bg-green-700 rounded-xl h-10 w-20" onClick={()=>requestHandler("accepted",user._id)}>Accept</button>
+                    <button className="bg-red-700 rounded-xl h-10 w-20" onClick={()=>requestHandler("rejected",user._id)}>Reject</button>
                     </div>
                     </div>
 

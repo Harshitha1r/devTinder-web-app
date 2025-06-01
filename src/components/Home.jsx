@@ -6,13 +6,16 @@ import UserCard from "./userCard";
 const Home = () => {
     const [profiles, setProfiles] = useState([])
     const [message,setMessage]=useState("")
+    const navigate=useNavigate();
     async function fetchProfile() {
         try {
             const res = await axios.get('http://localhost:7000/user/feed', { withCredentials: true })
             setProfiles(res?.data?.profiles)
         }
         catch (err) {
-
+      if (err.status === 400) {
+        navigate("/login");
+      }
         }
     }
 
@@ -26,7 +29,7 @@ const Home = () => {
   },3000)
 
     return (
-        <div className="h-123 bg-gray-900 flex justify-center items-center">
+        <div className="h-123 bg-white flex justify-center items-center">
             <div className="relative">
                 {profiles ? (profiles.map(profile => (
                     <UserCard profile={profile} setProfiles={setProfiles} profiles={profiles} key={profile._id} setMessage={setMessage}/>
