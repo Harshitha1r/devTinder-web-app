@@ -1,25 +1,35 @@
 import { useState } from 'react'
-import Login from './Login'
+import Login from './components/Login'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import Body from './Body'
+import Body from './components/Body'
 import { Provider } from 'react-redux'
 import store from './state/store'
-import Home from './Home'
+import Home from './components/Home'
+import Profile from './components/Profile'
+import Connections from './components/Connection'
+import Requests from './components/Requets'
+import SignUp from './components/Signup'
 
 function App() {
 
   return (
+    <>
     <Provider store={store}>
-      <BrowserRouter>
+      <BrowserRouter basename="/">
         <Routes>
           <Route path="/" element={<Body />}>
-            <Route path="/login" element={<Login />} />
             <Route path="/Home" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/profile" element={<Profile/>}/>
+            <Route path="/Connections" element={<Connections/>}/>
+            <Route path="/Requests" element={<Requests/>}/>
+            <Route path="/Signup" element={<SignUp/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
     </Provider>
+    </>
   )
 }
 
