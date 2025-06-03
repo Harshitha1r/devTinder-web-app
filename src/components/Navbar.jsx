@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useRef, useState,useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
 import { useNavigate } from "react-router-dom"
@@ -9,6 +9,7 @@ const NavBar = () => {
     const [open, setOpen] = useState(false)
     const dispatch = useDispatch()
     const navigate=useNavigate();
+    const menuRef=useRef(null)
     const navigateProfile=()=>{
         return navigate("/Profile");
     }
@@ -21,6 +22,18 @@ const NavBar = () => {
             console.log(err)
         }
     }
+    useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
     return (
         <div className="min-h-10 flex justify-between bg-black shadow-xl/30 text-white">
             <div className="flex">
@@ -34,7 +47,7 @@ const NavBar = () => {
                 <p className="w-20 font-bold">Welcome,{userData?.data?.firstName} {userData?.data?.lastName}</p>
                 <img src={userData?.data?.photoUrl || "https://static.vecteezy.com/system/resources/previews/027/448/973/non_2x/avatar-account-icon-default-social-media-profile-photo-vector.jpg"} alt="" className="h-10 w-12 ml-20 rounded-full" onClick={() => setOpen(!open)} />
                 {open && (
-                    <div className="absolute right-0 mt-40 w-48 bg-white border rounded shadow-md z-50">
+                    <div ref={menuRef} className="absolute right-0 mt-40 w-48 bg-white border rounded shadow-md z-50">
                         <ul className="py-1 text-sm text-gray-700" onClick={()=>setOpen(!open)}>
                             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={navigateProfile}>Profile</li>
                             <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer" onClick={logoutHandler}>Logout</li>

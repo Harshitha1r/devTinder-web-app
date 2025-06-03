@@ -6,22 +6,20 @@ import { useNavigate } from "react-router-dom"
 const SignUp = () => {
     const [formValue,setFormvalues]=useState({firstName:"",lastName:""
         ,email:"",password:"",gender:""})
-    const [err,setErr]=useState("")
     const [disabled,setDisabled]=useState(true)
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const formHandler = async () => {
         try{
         const res = await axios.post("http://localhost:7000/signup", {
-            firstName:formValue.firstName,lastName:formValue.lastName,email:formValue.email,password:formValue.password
+            firstName:formValue.firstName,lastName:formValue.lastName,email:formValue.email,password:formValue.password,gender:formValue.gender
         }, { withCredentials: true })
         console.log(res)
         if (res?.data?.data) {
             dispatch(adduser(res?.data))
             return navigate("/Profile")
         }}catch(err){
-            console.log(err)
-            setErr(err.response.data.message)
+            alert(err.response.data.message)
         }
     }
     useEffect(()=>{
@@ -31,6 +29,7 @@ const SignUp = () => {
     })
     const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log(name,value)
     setFormvalues({
       ...formValue,
       [name]: value,
@@ -47,7 +46,6 @@ const SignUp = () => {
                 <select className="bg-gray-900 text-white h-10 w-80 rounded-xl shadow-xl m-2" value={formValue.gender} name="gender" onChange={handleChange} required>
                       <option value="" disabled>Select a Gender</option>
                     <option value="Male">Male</option><option value="Female">Female</option></select>
-                {err && <p className="text-red-300 mt-3">Error:{err}</p>}
                 <button className={`text-black font-bold h-10 w-80 mt-5 rounded-xl ${
     disabled ? 'bg-gray-700 cursor-not-allowed' : 'bg-purple-500 cursor-pointer'}`} onClick={formHandler} disabled={disabled}>Submit</button>
                 <p className="text-white m-4">Already Have an Account ? <button className="text-white cursor-pointer" onClick={()=>navigate('/Login')}>Login</button></p>

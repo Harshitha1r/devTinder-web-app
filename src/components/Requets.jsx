@@ -9,22 +9,23 @@ const Requests=()=>{
         try{
             const res=await axios.get("http://localhost:7000/user/requests/received",{withCredentials:true})
             setRequests(res?.data?.data)
-            console.log(requests,res)
         }
         catch(err){
-            console.log(err)
+        setMessage(err?.response?.data)
         }
     }
 
     const requestHandler=async(status,id)=>{
         try{
+            let arr=requests.filter(val=>val._id != id)
+            setRequests(arr)
             const res=await axios.post(`http://localhost:7000/request/review/${status}/${id}`,{},{withCredentials:true})
             if(res){
                 setMessage(`Connection ${status} successfully`)
             }
         }
         catch(err){
-            console.log(err)
+        setMessage(err?.response?.data)
         }
     }
     useEffect(()=>{
@@ -35,15 +36,15 @@ const Requests=()=>{
             <p className="font-bold text-xl">Pending Requests</p>
             {requests.length ? 
             (requests.map(user=>(
-                <div className="h-20 w-150 m-3 bg-gray-100 flex justify-between border-gray-200 shadow-lg border-1 rounded-xl" key={user._id}>
+                <div className="h-20 w-150 m-3 bg-gray-100 flex items-center border-gray-200 shadow-lg border-1 rounded-xl" key={user._id}>
                     <img src={user.photoUrl} className="h-15 w-15 rounded-full m-2"/>
-                    <div className="flex flex-col">
+                    <div className="flex flex-col w-90">
                     <p className="font-bold">{user.firstName} {user.lastName}</p>
                     <p className="text-sm">{user.about}</p>
                     </div>
-                    <div className="flex justify-end mt-5 mr-2">
-                    <button className="bg-green-700 rounded-xl h-10 w-20" onClick={()=>requestHandler("accepted",user._id)}>Accept</button>
-                    <button className="bg-red-700 rounded-xl h-10 w-20" onClick={()=>requestHandler("rejected",user._id)}>Reject</button>
+                    <div className="flex justify-end mt-5 mr-2 gap-4">
+                    <button className="bg-green-700 rounded-xl h-10 w-20 cursor-pointer" onClick={()=>requestHandler("accepted",user._id)}>Accept</button>
+                    <button className="bg-red-700 rounded-xl h-10 w-20 cursor-pointer" onClick={()=>requestHandler("rejected",user._id)}>Reject</button>
                     </div>
                     </div>
 

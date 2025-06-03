@@ -1,8 +1,11 @@
 import axios from "axios"
 
-const UserCard = ({ profile,profiles,setProfiles,setMessage }) => {
+const UserCard = ({ profile,profiles,setProfiles,setMessage,fetchProfile,setPage }) => {
     const removeCard=async(value,status)=>{
         try{
+        if(profiles.length==1){
+            setPage(2)
+        }
         let arr=profiles.filter(val=>val._id!==value)
         setProfiles(arr)
         const res=await axios.post(`http://localhost:7000/request/send/${status}/${value}`,{},{withCredentials:true})
