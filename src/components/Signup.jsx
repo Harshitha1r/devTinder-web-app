@@ -14,7 +14,6 @@ const SignUp = () => {
         const res = await axios.post("http://localhost:7000/signup", {
             firstName:formValue.firstName,lastName:formValue.lastName,email:formValue.email,password:formValue.password,gender:formValue.gender
         }, { withCredentials: true })
-        console.log(res)
         if (res?.data?.data) {
             dispatch(adduser(res?.data))
             return navigate("/Profile")
@@ -29,7 +28,6 @@ const SignUp = () => {
     })
     const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(name,value)
     setFormvalues({
       ...formValue,
       [name]: value,

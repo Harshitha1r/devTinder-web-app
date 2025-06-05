@@ -8,7 +8,6 @@ const Profile=()=>{
     const [formValue,setFormvalues]=useState({firstName:"",lastName:""
         ,age:"",photoUrl:"",about:""})
     const [message,setMessage]=useState("")
-        console.log(userData,formValue)
     const dispatch=useDispatch();
     const handleChange = (e) => {
     const { name, value } = e.target;

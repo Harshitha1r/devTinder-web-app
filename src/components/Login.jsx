@@ -24,7 +24,6 @@ const Login = () => {
             dispatch(adduser(res?.data))
             return navigate("/Home")
         }}catch(err){
-            console.log(err)
             setErr(err.response.data.message)
         }
     }

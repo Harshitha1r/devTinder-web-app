@@ -36,15 +36,15 @@ const Requests=()=>{
             <p className="font-bold text-xl">Pending Requests</p>
             {requests.length ? 
             (requests.map(user=>(
-                <div className="h-20 w-150 m-3 bg-gray-100 flex items-center border-gray-200 shadow-lg border-1 rounded-xl" key={user._id}>
+                <div className="h-20 w-150 m-3 bg-gray-100 flex text-black items-center border-gray-200 shadow-lg border-1 rounded-xl" key={user._id}>
                     <img src={user.photoUrl} className="h-15 w-15 rounded-full m-2"/>
                     <div className="flex flex-col w-90">
                     <p className="font-bold">{user.firstName} {user.lastName}</p>
                     <p className="text-sm">{user.about}</p>
                     </div>
                     <div className="flex justify-end mt-5 mr-2 gap-4">
-                    <button className="bg-green-700 rounded-xl h-10 w-20 cursor-pointer" onClick={()=>requestHandler("accepted",user._id)}>Accept</button>
-                    <button className="bg-red-700 rounded-xl h-10 w-20 cursor-pointer" onClick={()=>requestHandler("rejected",user._id)}>Reject</button>
+                    <button className="btn btn-success" onClick={()=>requestHandler("accepted",user._id)}>Accept</button>
+                    <button className="btn btn-active btn-error" onClick={()=>requestHandler("rejected",user._id)}>Reject</button>
                     </div>
                     </div>
 

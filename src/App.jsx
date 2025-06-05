@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Login from './components/Login'
-import './App.css'
+import './index.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Body from './components/Body'
 import { Provider } from 'react-redux'
@@ -10,6 +10,7 @@ import Profile from './components/Profile'
 import Connections from './components/Connection'
 import Requests from './components/Requets'
 import SignUp from './components/Signup'
+import Chat from './components/Chat'
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
             <Route path="/Requests" element={<Requests/>}/>
             <Route path="/Signup" element={<SignUp/>}/>
             <Route path="/Profile" element={<Profile/>}/>
+            <Route path="/chat/:targetid" element={<Chat/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

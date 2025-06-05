@@ -19,7 +19,6 @@ const Body = () => {
       });
       dispatch(adduser(res.data));
     } catch (err) {
-      console.log(err)
       if (err.status === 400) {
         navigate("/login");
       }
