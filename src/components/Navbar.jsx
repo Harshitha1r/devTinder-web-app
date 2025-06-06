@@ -42,6 +42,7 @@ const NavBar = () => {
             </div>
             {userData?.data && 
             <div className="flex justify-between gap-5 items-center">
+                <a href="/chat">Chats</a>
                 <a href="/Connections">Connections</a>
                 <a href="/Requests">Requests</a>
                 <p className="w-20 font-bold">Welcome,{userData?.data?.firstName} {userData?.data?.lastName}</p>

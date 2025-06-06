@@ -10,7 +10,7 @@ const Home = () => {
     const navigate=useNavigate();
     async function fetchProfile() {
         try {
-            const res = await axios.get('http://localhost:7000/user/feed?page='+page+'&limit='+2, { withCredentials: true })
+            const res = await axios.get('http://localhost:7000/user/feed?page='+1+'&limit='+5, { withCredentials: true })
             setProfiles(res?.data?.profiles)
         }
         catch (err) {

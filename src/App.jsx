@@ -11,11 +11,13 @@ import Connections from './components/Connection'
 import Requests from './components/Requets'
 import SignUp from './components/Signup'
 import Chat from './components/Chat'
+import AppSec from './demo'
 
 function App() {
 
   return (
     <>
+    {/* <AppSec/> */}
     <Provider store={store}>
       <BrowserRouter basename="/">
         <Routes>
@@ -27,6 +29,7 @@ function App() {
             <Route path="/Signup" element={<SignUp/>}/>
             <Route path="/Profile" element={<Profile/>}/>
             <Route path="/chat/:targetid" element={<Chat/>}/>
+            <Route path="/chat" element={<Chat/>}/>
           </Route>
         </Routes>
       </BrowserRouter>

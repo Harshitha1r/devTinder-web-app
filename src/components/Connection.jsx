@@ -18,8 +18,8 @@ const Connections=()=>{
         fetchConnections()
     },[])
     return(
-        <div className="h-123 bg-[url('https://img.freepik.com/free-vector/modern-polygon-technology-background_1035-17925.jpg?semt=ais_items_boosted&w=740')] bg-cover bg-center flex flex-col items-center">
-            <p className="font-bold text-xl">Connections</p>
+        <div className="h-123 max-h-123 overflow-y-auto bg-[url('https://img.freepik.com/free-vector/modern-polygon-technology-background_1035-17925.jpg?semt=ais_items_boosted&w=740')] bg-cover bg-center flex flex-col items-center">
+            <p className="font-bold text-xl text-black">Connections</p>
             {connections?.length ? 
             (connections.map(user=>(
                 <div className="h-20 w-130 m-3 bg-gray-100 text-black border-blue border-1 rounded-xl flex items-center">
@@ -32,7 +32,7 @@ const Connections=()=>{
                     </div>
 
             )))
-            : <p>No connections</p>}
+            : <p className="text-black">No connections</p>}
         </div>
     )
 }

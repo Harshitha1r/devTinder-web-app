@@ -33,7 +33,7 @@ const Requests=()=>{
     },[])
     return(
         <div className="h-123 bg-white flex flex-col items-center">
-            <p className="font-bold text-xl">Pending Requests</p>
+            <p className="font-bold text-xl text-black">Pending Requests</p>
             {requests.length ? 
             (requests.map(user=>(
                 <div className="h-20 w-150 m-3 bg-gray-100 flex text-black items-center border-gray-200 shadow-lg border-1 rounded-xl" key={user._id}>
@@ -49,7 +49,7 @@ const Requests=()=>{
                     </div>
 
             )))
-            : <p>No Requests Pending</p>}
+            : <p className="text-black">No Requests Pending</p>}
                     {message &&
         <div id="toast-top-right" class="fixed flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow-sm top-5 right-5 dark:text-gray-400 dark:divide-gray-700 dark:bg-gray-800" role="alert">
             <div class="text-sm font-normal text-white">{message}</div>
