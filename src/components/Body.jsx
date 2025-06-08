@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { adduser } from "../state/slice";
 
 const Body = () => {
-    const userData = useSelector((store) => store.user);
+    const userData = useSelector((store) => store.user.loggedUser);
     const dispatch=useDispatch();
     const location=useLocation();
     const navigate=useNavigate()

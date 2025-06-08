@@ -4,7 +4,7 @@ import axios from "axios";
 import { adduser } from "../state/slice";
 
 const Profile=()=>{
-    const userData = useSelector((store) => store.user);
+    const userData = useSelector((store) => store.user.loggedUser);
     const [formValue,setFormvalues]=useState({firstName:"",lastName:""
         ,age:"",photoUrl:"",about:""})
     const [message,setMessage]=useState("")

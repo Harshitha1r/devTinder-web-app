@@ -10,10 +10,10 @@ const ChatBox=({msgarr,toDetails,userData,setMessage,message,sendMessage})=>{
         </div>
     <div className="max-h-100 overflow-y-auto p-4">
     {msgarr.length ? msgarr.map(msg=>(
-    <div className={`chat ${msg.firstName === userData.data.firstName ? "chat-end" : "chat-start"}`}>
+    <div key={msg._id} className={`chat ${msg.firstName === userData.data.firstName ? "chat-end" : "chat-start"}`}>
     <div className={`chat-bubble ${msg.firstName === userData.data.firstName ? "chat-bubble-info" : "chat-bubble-neutral"}`}>{msg.message}</div>
     </div>
-    )):<h1 className="block m-auto">Start Your Conversation</h1>}
+    )):<img className="h-50 mx-auto w-50" src="https://img.freepik.com/premium-vector/modern-design-concept-no-chat-conversation-design_637684-240.jpg"/>}
     </div>
     <div className="fixed bottom-6 p-4 ml-50 gap-2 rounded text-black">
       <input

@@ -1,10 +1,13 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { addTarget } from "../state/slice"
+import { useDispatch } from "react-redux"
 
 const Connections=()=>{
     const [connections,setConnection]=useState([])
     const navigateTo=useNavigate();
+    const dispatch=useDispatch();
     async function fetchConnections(){
         try{
             const res=await axios.get("http://localhost:7000/user/connections",{withCredentials:true})
@@ -13,6 +16,11 @@ const Connections=()=>{
         catch(err){
             console.log(err)
         }
+    }
+
+    const navigateToChat=(user)=>{
+        dispatch(addTarget(user))
+        navigateTo("/chat/"+user._id)
     }
     useEffect(()=>{
         fetchConnections()
@@ -28,7 +36,7 @@ const Connections=()=>{
                     <p className="font-bold">{user.firstName} {user.lastName}</p>
                     <p>{user.about}</p>
                     </div>
-                    <button className="btn btn-active mr-3" onClick={()=>navigateTo("/chat/"+user._id)}>Chat</button>
+                    <button className="btn btn-active mr-3" onClick={()=>navigateToChat(user)}>Chat</button>
                     </div>
 
             )))

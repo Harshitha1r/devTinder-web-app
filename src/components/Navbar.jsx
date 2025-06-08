@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom"
 import { removeUser } from "../state/slice"
 
 const NavBar = () => {
-    const userData = useSelector((state) => state.user)
+    const userData = useSelector((state) => state.user.loggedUser)
     const [open, setOpen] = useState(false)
     const dispatch = useDispatch()
     const navigate=useNavigate();

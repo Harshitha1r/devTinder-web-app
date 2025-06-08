@@ -33,7 +33,7 @@ const Home = () => {
             <div className="relative">
                 {profiles.length ? (profiles.map(profile => (
                     <UserCard profile={profile} setProfiles={setProfiles} profiles={profiles} key={profile._id} setMessage={setMessage} setPage={setPage} fetchProfile={fetchProfile}/>
-                ))) : "That's all Your recommendations for today"}
+                ))) : <p className="text-black">That's all Your recommendations for today</p>}
                                     {message &&
         <div id="toast-top-right" className="fixed flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow-sm top-5 right-5 dark:text-gray-400 dark:divide-gray-700 dark:bg-gray-800" role="alert">
             <div className="text-sm font-normal text-white">{message}</div>
