@@ -6,8 +6,9 @@ import { adduser } from "../state/slice";
 const Profile=()=>{
     const userData = useSelector((store) => store.user.loggedUser);
     const [formValue,setFormvalues]=useState({firstName:"",lastName:""
-        ,age:"",photoUrl:"",about:""})
+        ,age:"",photoUrl:"",about:"",techStack:[],expLevel:"",role:""})
     const [message,setMessage]=useState("")
+    const [nextPage,setNext]=useState(false)
     const dispatch=useDispatch();
     const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,18 +18,21 @@ const Profile=()=>{
     });
   };
   useEffect(()=>{
-    setFormvalues({firstName:userData?.data?.firstName,lastName:userData?.data?.lastName
-        ,age:userData?.data?.age,photoUrl:userData?.data?.photoUrl,about:userData?.data?.about})
+    setFormvalues({firstName:userData?.data?.firstName || "",lastName:userData?.data?.lastName || ""
+        ,age:userData?.data?.age || "",photoUrl:userData?.data?.photoUrl || "",about:userData?.data?.about ||"",
+        techStack:userData?.data?.techStack || [],expLevel:userData?.data?.experienceLevel || "",role:userData?.data?.role || ""})
   },[userData])
   setTimeout(()=>{
     if(message){
         setMessage("")
     }
   },3000)
+  console.log(formValue)
   const updateInfo=async()=>{
     try{
         const res=await axios.patch("http://localhost:7000/profile/edit",{firstName:formValue.firstName,lastName:formValue.lastName,
-            age:formValue.age,photoUrl:formValue.photoUrl,about:formValue.about
+            age:formValue.age,photoUrl:formValue.photoUrl,about:formValue.about,experienceLevel:formValue.expLevel,
+            role:formValue.role,techStack:formValue.techStack
         },{withCredentials:true})     
         dispatch(adduser(res?.data))
         setMessage("Profile Updated Successfully")   
@@ -40,7 +44,9 @@ const Profile=()=>{
     return(
         <div className="h-123 bg-neutral-400 flex justify-center items-center">
             <div className="h-120 w-120 bg-gray-500 rounded-xl flex flex-wrap flex-col justify-between">
-                <span className="text-white text-xl m-2 font-bold">Profile Information</span>
+                {!nextPage ? 
+                <>
+                <span className="text-white text-xl m-2 font-bold">Basic Info</span>
                 <label className="text-white text-md m-3 items-center flex">FirstName
                 <input type="text" className="bg-gray-400 border-white ml-6 text-white p-5 h-10 w-80 rounded-md shadow-xl" name="firstName" value={formValue.firstName} onChange={handleChange} /></label>
                 <label className="text-white text-md m-3 items-center flex">Lastname
@@ -51,8 +57,25 @@ const Profile=()=>{
                 <input type="text" className="bg-gray-400 text-white ml-8 h-10 p-5 w-80 rounded-md shadow-xl" name="photoUrl" value={formValue.photoUrl} onChange={handleChange} /></label>
                 <label className="text-white text-md m-3 items-center flex">About
                 <textarea type="text" className="bg-gray-400 text-white ml-13 p-2 h-20 w-80 rounded-md shadow-xl" name="about" value={formValue.about} onChange={handleChange} /></label>
-                <button className="block mx-auto text-sm font-bold bg-black text-white w-40 h-8 m-5 rounded-sm cursor-pointer"
-                onClick={updateInfo}>Save Changes</button>
+                <button class="w-20 block m-auto btn btn-outline btn-info" onClick={()=>setNext(true)}>Next</button>
+                </>:
+                <>
+                <span className="text-white text-xl m-2 font-bold">Technical Info</span>
+                <label className="text-white text-md m-3 items-center flex">TechStack
+                <textarea type="text" className="bg-gray-400 border-white ml-6 text-white p-5 h-20 w-80 rounded-md shadow-xl" name="techStack" value={formValue.techStack} onChange={handleChange} /></label>
+                <label className="text-white text-md m-3 items-center flex">Exp.Level
+                <select className="bg-gray-400 text-white ml-8 h-10 w-80 rounded-md shadow-xl m-2" name="expLevel" value={formValue.expLevel} onChange={handleChange} required>
+                <option value="Beginner">Beginner</option>
+                <option value="Intermediate">Intermediate</option>
+                <option value="Expert">Expert</option>
+                </select>
+                </label>
+                <label className="text-white text-md m-3 items-center flex">Role
+                <input type="text" className="bg-gray-400 text-white ml-17 h-10 p-5 w-80 rounded-md shadow-xl" name="role" value={formValue.role} onChange={handleChange} /></label>
+                <div className="flex items-center justify-center gap-2 p-3"><button class="w-40 btn btn-outline btn-info" onClick={()=>setNext(false)}>Cancel</button>
+                <button class="w-40 btn btn-accent" onClick={updateInfo}>Submit</button></div>
+                </>
+                }
             </div>
             <div style={{
             width: "400px",

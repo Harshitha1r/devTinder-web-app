@@ -9,6 +9,7 @@ import status from "daisyui/components/status";
 const Chat=()=>{
     const {targetid}=useParams();
     const [message,setMessage]=useState("")
+    const [alert,setAlert]=useState("")
     const [msgarr,setMsgarr]=useState([])
     const [selectedChat,setSelectedchat]=useState(targetid)
     const [chatarr,setChatarr]=useState([])
@@ -18,8 +19,12 @@ const Chat=()=>{
     const dispatch=useDispatch()
 
     const userData = useSelector((state) => state.user.loggedUser)
-    const targetData = useSelector((state) => state.user.targetUser)
+    const targetData = useSelector((state) => state.user.targetUser || {})
     const socket=createSocketConnection();
+
+    function isEmpty(obj) {
+     return Object.keys(obj).length === 0;
+   }
 
     async function fetchChatMessages(){
         try{
@@ -68,6 +73,14 @@ const Chat=()=>{
     },[selectedChat,userData])
 
     useEffect(()=>{
+            socket.on("fetchNotification",({targetUserId,firstName,lastName})=>{
+            if(userData?.data?._id===targetUserId){
+            setAlert(`You have new message from ${firstName}`)
+            }
+        })
+    },[msgarr,userData])
+
+    useEffect(()=>{
         if(selectedChat){
         fetchChatMessages();
         }
@@ -77,7 +90,7 @@ const Chat=()=>{
     <div className="flex h-122"> 
     <div className="w-110 max-h-120 overflow-y-auto">
         <h1 className="text-bold text-xl m-2">Chats</h1>
-                    {!chatExist && targetData?.length && <div className="cursor-pointer h-20 w-100 bg-transparent text-black border-blue border-1 rounded-xl flex items-center" onClick={()=>{
+                {!chatExist && !isEmpty(targetData) && <div className="cursor-pointer h-20 w-100 bg-transparent text-black border-blue border-1 rounded-xl flex items-center" onClick={()=>{
                     setSelectedchat(targetData._id);
                     navigateTo("/chat/"+targetData._id)
                 }
@@ -102,7 +115,11 @@ const Chat=()=>{
 
             ))}
     </div>
-    {selectedChat &&<ChatBox toDetails={!chatExist && targetData?.length? targetData :toDetails} msgarr={msgarr} userData={userData} setSelectedchat={setSelectedchat} setMessage={setMessage} message={message} sendMessage={sendMessage}/>}
+    {selectedChat &&<ChatBox toDetails={!chatExist && !isEmpty(targetData)? targetData :toDetails} msgarr={msgarr} userData={userData} setSelectedchat={setSelectedchat} setMessage={setMessage} message={message} sendMessage={sendMessage}/>}
+        {alert &&
+        <div id="toast-top-right" class="fixed flex items-center w-full max-w-xs p-4 space-x-4 text-gray-500 bg-white divide-x rtl:divide-x-reverse divide-gray-200 rounded-lg shadow-sm top-5 right-5 dark:text-gray-400 dark:divide-gray-700 dark:bg-gray-800" role="alert">
+            <div class="text-sm font-normal text-white">{alert}<button onClick={()=>setAlert("")} className="p-2 cursor-pointer">❌</button></div>
+        </div>}
     </div> 
        )
 }

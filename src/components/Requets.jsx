@@ -14,6 +14,13 @@ const Requests=()=>{
         setMessage(err?.response?.data)
         }
     }
+    useEffect(()=>{
+    setTimeout(()=>{
+    if(message){
+        setMessage("")
+    }
+    },3000)
+    },[message])
 
     const requestHandler=async(status,id)=>{
         try{
@@ -32,7 +39,7 @@ const Requests=()=>{
         fetchConnections()
     },[])
     return(
-        <div className="h-123 bg-white flex flex-col items-center">
+        <div className="h-123 max-h-123 overflow-y-auto bg-white flex flex-col items-center">
             <p className="font-bold text-xl text-black">Pending Requests</p>
             {requests.length ? 
             (requests.map(user=>(
