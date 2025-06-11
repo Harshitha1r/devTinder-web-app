@@ -1,4 +1,4 @@
-# 💘 DevTinder
+# DevTinder
 
 DevTinder is a full-stack web application inspired by Tinder, built specifically for developers to connect, collaborate, and match based on shared tech interests. Whether you're looking for a coding partner, a co-founder, or someone to pair-program with — DevTinder brings devs together.
 
